@@ -1,0 +1,212 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Video Editor based in London" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    
+    <!-- Google Fonts - Clean sans-serif similar to original -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="site-wrapper">
+      <header class="site-header">
+        <div class="logo">
+          <a href="/">Alex Baro / Editor</a>
+        </div>
+        <nav class="main-nav">
+          <a href="/" class="nav-link">Work</a>
+          <a href="/about" class="nav-link">About</a>
+        </nav>
+        <button class="hamburger" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </header>
+      
+      <main>
+        <slot />
+      </main>
+    </div>
+    
+    <script>
+      // Mobile menu toggle
+      const hamburger = document.querySelector('.hamburger');
+      const nav = document.querySelector('.main-nav');
+      
+      hamburger?.addEventListener('click', () => {
+        nav?.classList.toggle('open');
+        hamburger.classList.toggle('open');
+      });
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --color-bg: #ffffff;
+    --color-text: #1a1a1a;
+    --color-text-secondary: #666666;
+    --color-border: #e5e5e5;
+    --max-width: 1400px;
+    --header-height: 80px;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--color-text);
+    background: var(--color-bg);
+  }
+  
+  body {
+    min-height: 100vh;
+  }
+  
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .site-wrapper {
+    min-height: 100vh;
+  }
+  
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    background: var(--color-bg);
+    z-index: 100;
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .logo a {
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  
+  .main-nav {
+    display: flex;
+    gap: 32px;
+  }
+  
+  .nav-link {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--color-text-secondary);
+    transition: color 0.2s ease;
+  }
+  
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--color-text);
+  }
+  
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .hamburger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--color-text);
+    transition: all 0.3s ease;
+  }
+  
+  .hamburger.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  
+  .hamburger.open span:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .hamburger.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+  
+  main {
+    padding-top: var(--header-height);
+    min-height: calc(100vh - var(--header-height));
+  }
+  
+  @media (max-width: 768px) {
+    .site-header {
+      padding: 0 20px;
+    }
+    
+    .hamburger {
+      display: flex;
+    }
+    
+    .main-nav {
+      position: fixed;
+      top: var(--header-height);
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--color-bg);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .main-nav.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .nav-link {
+      font-size: 1.5rem;
+    }
+  }
+</style>

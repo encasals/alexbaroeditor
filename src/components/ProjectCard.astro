@@ -1,0 +1,86 @@
+---
+interface Props {
+  slug: string;
+  title: string;
+  year: string;
+  coverImage: string;
+}
+
+const { slug, title, year, coverImage } = Astro.props;
+---
+
+<a href={`/projects/${slug}`} class="project-card">
+  <div class="cover-image">
+    <img src={coverImage} alt={title} loading="lazy" />
+  </div>
+  <div class="details">
+    <h3 class="title">{title}</h3>
+    <span class="year">{year}</span>
+  </div>
+</a>
+
+<style>
+  .project-card {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    background: #f5f5f5;
+    aspect-ratio: 4 / 3.1;
+  }
+  
+  .cover-image {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  
+  .cover-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  
+  .project-card:hover .cover-image img {
+    transform: scale(1.05);
+  }
+  
+  .details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .project-card:hover .details {
+    opacity: 1;
+  }
+  
+  .title {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  
+  .year {
+    font-size: 0.85rem;
+    opacity: 0.8;
+  }
+  
+  @media (max-width: 768px) {
+    .details {
+      opacity: 1;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, transparent 100%);
+    }
+    
+    .title {
+      font-size: 0.9rem;
+    }
+  }
+</style>

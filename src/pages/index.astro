@@ -1,0 +1,51 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { projects } from '../data/projects';
+---
+
+<Layout title="Alex Baro / Editor - Work">
+  <section class="work-page">
+    <div class="project-grid">
+      {projects.map((project) => (
+        <ProjectCard
+          slug={project.slug}
+          title={project.title}
+          year={project.year}
+          coverImage={project.coverImage}
+        />
+      ))}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .work-page {
+    padding: 40px;
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+  
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  
+  @media (max-width: 1024px) {
+    .project-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .work-page {
+      padding: 20px;
+    }
+    
+    .project-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+</style>

@@ -1,0 +1,130 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Alex Baro / Editor - About" description="Alex Baro-Cayetano is an award winning British-Spanish video editor based in London.">
+  <section class="about-page">
+    <div class="about-content">
+      <div class="photo-column">
+        <img 
+          src="/images/about/profile.jpg" 
+          alt="Alex Baro-Cayetano" 
+          class="profile-photo"
+        />
+      </div>
+      
+      <div class="bio-column">
+        <div class="bio-text">
+          <p>
+            Alex Baro-Cayetano is your only award winning British-Spanish video editor in London.
+          </p>
+          <p>
+            He has worked at agencies such as <strong>Imagination</strong>, <strong>BMB</strong>, 
+            <strong>Leagas Delaney</strong>, <strong>Pablo London</strong>, <strong>Red Havas</strong>, 
+            <strong>McCann</strong>, <strong>Adjust Your Set</strong>, <strong>Group SJR</strong>, 
+            <strong>Jack Morton</strong>, and <strong>BAMM</strong>.
+          </p>
+          <p>
+            He has made stuff for <strong>Samsung</strong>, <strong>Vice</strong>, <strong>Ebay</strong>, 
+            <strong>Sony Music</strong>, <strong>Facebook</strong>, <strong>Lululemon</strong>, 
+            <strong>Disney</strong>, <strong>Adidas</strong>, and <strong>Fred Perry</strong>.
+          </p>
+        </div>
+        
+        <div class="contact">
+          <a href="mailto:alexbarocayetano@gmail.com" class="email-link">
+            alexbarocayetano@gmail.com
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .about-page {
+    padding: 60px 40px;
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+  
+  .about-content {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 60px;
+    align-items: start;
+  }
+  
+  .photo-column {
+    position: sticky;
+    top: calc(var(--header-height) + 40px);
+  }
+  
+  .profile-photo {
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+  
+  .bio-column {
+    padding-top: 10px;
+  }
+  
+  .bio-text {
+    max-width: 600px;
+  }
+  
+  .bio-text p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5em;
+    color: var(--color-text);
+  }
+  
+  .bio-text strong {
+    font-weight: 500;
+  }
+  
+  .contact {
+    margin-top: 40px;
+  }
+  
+  .email-link {
+    font-size: 1rem;
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: opacity 0.2s ease;
+  }
+  
+  .email-link:hover {
+    opacity: 0.7;
+  }
+  
+  @media (max-width: 900px) {
+    .about-content {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    
+    .photo-column {
+      position: static;
+    }
+    
+    .profile-photo {
+      max-width: 300px;
+      margin: 0 auto;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .about-page {
+      padding: 40px 20px;
+    }
+    
+    .bio-text p {
+      font-size: 1rem;
+    }
+  }
+</style>
