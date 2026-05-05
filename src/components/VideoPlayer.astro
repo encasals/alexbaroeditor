@@ -6,15 +6,16 @@ interface Props {
 
 const { videoId, portrait = true } = Astro.props;
 const videoSrc = `/videos/${videoId}.mp4`;
+const posterSrc = `/videos/posters/${videoId}.jpg`;
 ---
 
-<div class:list={["video-player", { portrait }]} data-video-id={videoId}>
-  <canvas class="video-poster"></canvas>
+<div class:list={["video-player", { portrait }]}>
   <video 
     src={videoSrc}
     controls
     playsinline
     preload="metadata"
+    poster={posterSrc}
   >
     <source src={videoSrc} type="video/mp4" />
     Your browser does not support the video tag.
@@ -45,79 +46,4 @@ const videoSrc = `/videos/${videoId}.mp4`;
     object-fit: contain;
     display: block;
   }
-  
-  .video-poster {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    z-index: 1;
-    pointer-events: none;
-  }
-  
-  .video-player.playing .video-poster,
-  .video-player.loaded .video-poster {
-    display: none;
-  }
 </style>
-
-<script>
-  function initVideoPlayers() {
-    const players = document.querySelectorAll('.video-player');
-    
-    players.forEach((player) => {
-      const video = player.querySelector('video') as HTMLVideoElement;
-      const canvas = player.querySelector('.video-poster') as HTMLCanvasElement;
-      
-      if (!video || !canvas) return;
-      
-      // Capture first frame when metadata is loaded
-      const captureFrame = () => {
-        // Seek to 0.1 seconds to get a frame (some videos have black first frame)
-        video.currentTime = 0.1;
-      };
-      
-      const drawFrame = () => {
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-        
-        // Set canvas size to match video
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        
-        // Draw the current frame
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-        
-        // Reset video to start
-        video.currentTime = 0;
-        
-        // Mark as loaded
-        player.classList.add('loaded');
-      };
-      
-      // Handle video events
-      video.addEventListener('loadedmetadata', captureFrame, { once: true });
-      video.addEventListener('seeked', drawFrame, { once: true });
-      
-      // Hide poster when video starts playing
-      video.addEventListener('play', () => {
-        player.classList.add('playing');
-      });
-      
-      // Show poster when video is paused at the beginning
-      video.addEventListener('pause', () => {
-        if (video.currentTime < 0.5) {
-          player.classList.remove('playing');
-        }
-      });
-    });
-  }
-  
-  // Initialize on page load
-  document.addEventListener('DOMContentLoaded', initVideoPlayers);
-  
-  // Re-initialize on Astro page transitions
-  document.addEventListener('astro:page-load', initVideoPlayers);
-</script>
