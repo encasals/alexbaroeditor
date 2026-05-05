@@ -16,10 +16,8 @@ async function optimizeImage(inputPath, outputDir) {
     const metadata = await image.metadata();
     
     // Generate WebP versions at different sizes
+    // Always create all sizes - use original size if smaller than target
     for (const width of SIZES) {
-      // Skip if original is smaller than target
-      if (metadata.width && metadata.width < width) continue;
-      
       const webpPath = path.join(outputDir, `${filename}-${width}w.webp`);
       await sharp(inputPath)
         .resize(width, null, { withoutEnlargement: true })
@@ -27,7 +25,8 @@ async function optimizeImage(inputPath, outputDir) {
         .toFile(webpPath);
       
       const stats = fs.statSync(webpPath);
-      console.log(`  Created: ${webpPath} (${(stats.size / 1024).toFixed(1)} KB)`);
+      const note = (metadata.width && metadata.width < width) ? ' (original size)' : '';
+      console.log(`  Created: ${webpPath} (${(stats.size / 1024).toFixed(1)} KB)${note}`);
     }
     
     // Generate full-size WebP
