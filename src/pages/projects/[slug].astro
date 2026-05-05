@@ -33,9 +33,22 @@ let gridClass = 'single';
 if (videoCount === 2) gridClass = 'two-col';
 else if (videoCount >= 3 && videoCount <= 4) gridClass = 'three-col';
 else if (videoCount >= 5) gridClass = 'three-col';
+
+// SEO - Generate dynamic description and keywords
+const seoDescription = project.description 
+  ? `${project.description} Video editing by Alex Baro-Cayetano.`
+  : `${project.title} - Video editing project by Alex Baro-Cayetano, London-based video editor.`;
+
+const seoKeywords = `${project.title}, video editing, Alex Baro, ${project.year}, commercial video, brand content`;
 ---
 
-<Layout title={`${project.title} - Alex Baro / Editor`} description={project.description}>
+<Layout 
+  title={`${project.title} | Alex Baro Video Editor`}
+  description={seoDescription}
+  keywords={seoKeywords}
+  image={project.coverImage}
+  type="article"
+>
   <article class="project-page">
     <header class="project-header">
       <h1 class="project-title">{project.title}</h1>

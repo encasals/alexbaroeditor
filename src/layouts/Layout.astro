@@ -2,9 +2,26 @@
 interface Props {
   title: string;
   description?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  keywords?: string;
 }
 
-const { title, description = "Video Editor based in London" } = Astro.props;
+const siteUrl = 'https://alexbaroeditor.vercel.app';
+const defaultDescription = "Alex Baro-Cayetano is an award-winning British-Spanish video editor based in London, working with brands like PlayStation, Adidas, BMW, Sony Music, and Vice Media.";
+const defaultImage = "/images/about/profile.jpg";
+const defaultKeywords = "video editor, London, Alex Baro, video production, commercial editor, music video editor, brand content, social media video, documentary editor";
+
+const { 
+  title, 
+  description = defaultDescription,
+  image = defaultImage,
+  type = 'website',
+  keywords = defaultKeywords
+} = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const ogImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
 ---
 
 <!doctype html>
@@ -12,10 +29,61 @@ const { title, description = "Video Editor based in London" } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Primary Meta Tags -->
     <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content="Alex Baro-Cayetano" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="Alex Baro / Editor" />
+    <meta property="og:locale" content="en_GB" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    
+    <!-- Additional SEO -->
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Alex Baro-Cayetano",
+      "jobTitle": "Video Editor",
+      "url": siteUrl,
+      "image": `${siteUrl}/images/about/profile.jpg`,
+      "sameAs": [],
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Freelance"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "London",
+        "addressCountry": "GB"
+      },
+      "description": defaultDescription,
+      "knowsAbout": ["Video Editing", "Commercial Production", "Music Videos", "Documentary", "Social Media Content", "Brand Films"]
+    })} />
     
     <!-- Google Fonts - Clean sans-serif similar to original -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
