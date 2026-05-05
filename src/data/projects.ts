@@ -55,7 +55,7 @@ export const projects: Project[] = [
     coverImage: "/images/covers/waterbear.jpg",
     description: "The Waterbear Network is a free video-on-demand platform dedicated to the future of our planet. I was briefed to promote the launch of the Waterbear Network.",
     videos: [],
-    youtubeIds: ["z3FxAP5qYqQ", "G5yFd9awYIM"],
+    youtubeIds: ["bYQlCdeRfOI", "K0lAn82rCP0", "6BF-HaoPGu8"],
     aspectRatio: "landscape"
   },
   {
@@ -74,7 +74,7 @@ export const projects: Project[] = [
     coverImage: "/images/covers/goodwood-2020.png",
     description: "Client: Goodwood. Agency: Imagination. Role: Editing. Assets created to promote the annual Goodwood Festival of Speed.",
     videos: [],
-    youtubeIds: ["Z4MnJJwKlP8"],
+    youtubeIds: ["2bSusXpKcYY"],
     aspectRatio: "landscape"
   },
   {
@@ -111,7 +111,7 @@ export const projects: Project[] = [
     coverImage: "/images/covers/declan-mckenna.png",
     description: "Client: Sony Music. Role: Editing. Album campaign assets for Declan McKenna.",
     videos: [],
-    youtubeIds: ["eiZnbGBDM48"],
+    youtubeIds: ["7faR-kQCAYo"],
     aspectRatio: "landscape"
   },
   {
