@@ -7,6 +7,9 @@ import { projects } from '../data/projects';
 const firstProject = projects[0];
 const firstImageBase = firstProject.coverImage.replace(/\.(jpg|jpeg|png)$/i, '');
 const preloadImage = `${firstImageBase}-400w.webp`;
+
+// Number of above-the-fold images to eagerly load (3 on desktop, but we load 6 to cover tablet/mobile)
+const PRIORITY_COUNT = 6;
 ---
 
 <Layout 
@@ -17,12 +20,13 @@ const preloadImage = `${firstImageBase}-400w.webp`;
 >
   <section class="work-page">
     <div class="project-grid">
-      {projects.map((project) => (
+      {projects.map((project, index) => (
         <ProjectCard
           slug={project.slug}
           title={project.title}
           year={project.year}
           coverImage={project.coverImage}
+          priority={index < PRIORITY_COUNT}
         />
       ))}
     </div>

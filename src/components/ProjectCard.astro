@@ -4,9 +4,10 @@ interface Props {
   title: string;
   year: string;
   coverImage: string;
+  priority?: boolean; // Set to true for above-the-fold images (LCP)
 }
 
-const { slug, title, year, coverImage } = Astro.props;
+const { slug, title, year, coverImage, priority = false } = Astro.props;
 
 // Generate WebP srcset paths from the original image path
 const basePath = coverImage.replace(/\.(jpg|jpeg|png)$/i, '');
@@ -25,8 +26,9 @@ const webpSrc = `${basePath}-400w.webp`;
       <img 
         src={coverImage} 
         alt={title} 
-        loading="lazy"
-        decoding="async"
+        loading={priority ? "eager" : "lazy"}
+        decoding={priority ? "sync" : "async"}
+        fetchpriority={priority ? "high" : "auto"}
         width="400"
         height="310"
       />
