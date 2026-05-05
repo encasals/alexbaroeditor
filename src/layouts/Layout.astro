@@ -5,6 +5,7 @@ interface Props {
   image?: string;
   type?: 'website' | 'article';
   keywords?: string;
+  preloadImage?: string;
 }
 
 const siteUrl = 'https://alexbaroeditor.vercel.app';
@@ -17,7 +18,8 @@ const {
   description = defaultDescription,
   image = defaultImage,
   type = 'website',
-  keywords = defaultKeywords
+  keywords = defaultKeywords,
+  preloadImage
 } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
@@ -89,6 +91,16 @@ const ogImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Preload LCP image if specified -->
+    {preloadImage && (
+      <link 
+        rel="preload" 
+        as="image" 
+        href={preloadImage}
+        type="image/webp"
+      />
+    )}
   </head>
   <body>
     <div class="site-wrapper">

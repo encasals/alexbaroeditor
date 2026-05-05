@@ -2,12 +2,18 @@
 import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { projects } from '../data/projects';
+
+// Get the first project's cover image for preloading (LCP optimization)
+const firstProject = projects[0];
+const firstImageBase = firstProject.coverImage.replace(/\.(jpg|jpeg|png)$/i, '');
+const preloadImage = `${firstImageBase}-400w.webp`;
 ---
 
 <Layout 
   title="Alex Baro | Award-Winning Video Editor in London"
   description="Portfolio of Alex Baro-Cayetano, an award-winning British-Spanish video editor in London. Work includes projects for PlayStation, Adidas, BMW, Sony Music, Vice Media, and more."
   keywords="video editor portfolio, London video editor, commercial video editing, music video editor, brand content creator, Alex Baro work"
+  preloadImage={preloadImage}
 >
   <section class="work-page">
     <div class="project-grid">

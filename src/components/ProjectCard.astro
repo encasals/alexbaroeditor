@@ -7,11 +7,30 @@ interface Props {
 }
 
 const { slug, title, year, coverImage } = Astro.props;
+
+// Generate WebP srcset paths from the original image path
+const basePath = coverImage.replace(/\.(jpg|jpeg|png)$/i, '');
+const webpSrcset = `${basePath}-400w.webp 400w, ${basePath}-800w.webp 800w, ${basePath}.webp 1200w`;
+const webpSrc = `${basePath}-400w.webp`;
 ---
 
 <a href={`/projects/${slug}`} class="project-card">
   <div class="cover-image">
-    <img src={coverImage} alt={title} loading="lazy" />
+    <picture>
+      <source 
+        type="image/webp" 
+        srcset={webpSrcset}
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+      />
+      <img 
+        src={coverImage} 
+        alt={title} 
+        loading="lazy"
+        decoding="async"
+        width="400"
+        height="310"
+      />
+    </picture>
   </div>
   <div class="details">
     <h3 class="title">{title}</h3>
